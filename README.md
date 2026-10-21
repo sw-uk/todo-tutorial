@@ -2,6 +2,27 @@
 
 [Claude Code Playbook](https://docs.claude-hunt.com) 강의의 실습용 저장소입니다. Next.js 와 shadcn/ui 로 시작하는 작은 Todo 앱을 단계별로 발전시키며 Claude Code 사용법을 익힙니다.
 
+## 프로젝트 소개
+
+브라우저에서 동작하는 Todo 앱입니다. 데이터는 서버 없이 브라우저의 `localStorage`(`todos` 키)에 저장되므로, 새로고침해도 할 일이 유지됩니다.
+
+주요 기능:
+
+- 할 일 추가 · 완료 체크 · 인라인 수정(Enter 저장 / Esc 취소) · 삭제
+- 우선순위(높음 · 보통 · 낮음), 마감일, 카테고리(업무 · 개인 · 쇼핑) 지정
+- 상태 필터(전체 · 진행중 · 완료), 카테고리 필터, 제목 검색
+- 정렬(생성일순 · 이름순 · 마감일순)
+- 다크 모드 (`D` 키로 전환)
+
+## 프로젝트 구조
+
+```
+app/          Next.js App Router (레이아웃, 페이지, 전역 스타일)
+components/   Todo UI 컴포넌트와 테스트 (ui/ 는 shadcn/ui 컴포넌트)
+hooks/        상태 관리 훅 (use-todos: localStorage 연동)
+lib/          타입 정의와 정렬 · 검색 유틸
+```
+
 ## 관련 링크
 
 - 강의 본문: https://docs.claude-hunt.com
@@ -18,23 +39,31 @@
 
 ## 시작하기
 
+사전 준비: [bun](https://bun.sh) 이 설치되어 있어야 합니다.
+
 ```bash
+git clone https://github.com/toy-crane/todo-tutorial.git
+cd todo-tutorial
 bun install
-bun dev
+bun run dev
 ```
 
-개발 서버는 기본적으로 [http://localhost:3000](http://localhost:3000) 에서 열립니다.
+개발 서버는 기본적으로 [http://localhost:3000](http://localhost:3000) 에서 열립니다. 3000번 포트가 이미 사용 중이면 Next.js 가 다음 빈 포트(예: 3001)로 실행하며, 실제 주소는 터미널 출력에 표시됩니다.
 
 자주 쓰는 스크립트:
 
 ```bash
-bun dev            # 개발 서버 실행
+bun run dev        # 개발 서버 실행
 bun run build      # 프로덕션 빌드
 bun run start      # 빌드 결과 실행
 bun run lint       # ESLint
 bun run typecheck  # tsc --noEmit
+bun run test       # 테스트 1회 실행 (Vitest)
+bun run test:watch # 테스트 감시 모드
 bun run format     # Prettier 포맷팅
 ```
+
+> 테스트는 `bun test` 가 아니라 `bun run test` 로 실행합니다. `bun test` 는 bun 내장 러너를 호출해 Vitest 설정이 적용되지 않습니다.
 
 ## 챕터별 시작 브랜치
 
